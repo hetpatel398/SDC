@@ -73,5 +73,3 @@ while True:
         
         sio.emit('manual', data={}, skip_sid=True)
 
-
-

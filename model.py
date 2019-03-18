@@ -11,17 +11,18 @@ import os
 
 np.random.seed(0)
 
+args_name_lst=['TimeStamp','POS_X','POS_Y','POS_Z','Q_W','Q_X','Q_Y','Q_Z','Throttle','Steering','Brake','Gear','Handbrake','RPM','Speed','center','right','left']
 
 def load_data(args):
-    data_df = pd.read_csv(os.path.join(os.getcwd(), args.data_dir, 'driving_log.csv'), names=['center', 'left', 'right', 'steering', 'throttle', 'reverse', 'speed'])
+    data_df = pd.read_csv(os.path.join('./data.csv'), names=args_name_lst)
 
     X = data_df[['center', 'left', 'right']].values
-    y = data_df['steering'].values
+    y = data_df['Steering'].values
 
     X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=args.test_size, random_state=0)
-
+    y_train = y_train.astype(np.float)
+    y_valid = y_valid.astype(np.float)
     return X_train, X_valid, y_train, y_valid
-
 
 def build_model(args):
     model = Sequential()
@@ -31,7 +32,7 @@ def build_model(args):
     model.add(Conv2D(48, 5, 5, activation='elu', subsample=(2, 2)))
     model.add(Conv2D(64, 3, 3, activation='elu'))
     model.add(Conv2D(64, 3, 3, activation='elu'))
-    model.add(Dropout(args.keep_prob))
+    model.add(Dropout(0.5))
     model.add(Flatten())
     model.add(Dense(100, activation='elu'))
     model.add(Dense(50, activation='elu'))
@@ -69,7 +70,7 @@ def s2b(s):
 
 def main():
     parser = argparse.ArgumentParser(description='Behavioral Cloning Training Program')
-    parser.add_argument('-d', help='data directory',dest='data_dir', type=str, default='data')
+    parser.add_argument('-d', help='data directory',dest='data_dir', type=str, default='images')
     parser.add_argument('-t', help='test size fraction',dest='test_size', type=float, default=0.2)
     parser.add_argument('-k', help='drop out probability',dest='keep_prob', type=float, default=0.5)
     parser.add_argument('-n', help='number of epochs',dest='nb_epoch', type=int,   default=10)

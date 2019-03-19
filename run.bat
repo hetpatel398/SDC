@@ -1,0 +1,1 @@
+start CityEnviron -ResX=480 -ResY=360 -windowed

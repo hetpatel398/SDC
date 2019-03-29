@@ -41,6 +41,13 @@ print(car_state.gear)
 steering_angle_g=0
 throttle_g=0
 
+def throttle_op(i):
+    if i<0 and i>-1:
+        return -i
+    elif i>0 and i<1:
+        return i
+    else:
+        return 0.30
 
 while True:
     if True:
@@ -55,16 +62,15 @@ while True:
             image = utils.preprocess(image) 
             image = np.array([image])       
             steering_angle_g = float(model.predict(image, batch_size=1))
-            
             if speed > speed_limit:
                 speed_limit = MIN_SPEED  
             else:
                 speed_limit = MAX_SPEED
-            
-            throttle_g = 0.65 - steering_angle_g**2 - (speed/speed_limit)**2  #Magic Number!!!
+            steering_angle_g=(steering_angle_g-35)/10
+            throttle_g = 1 - (steering_angle_g)**2 - (speed/speed_limit)**2  #Magic Number!!!
 
-            print('{} {} {}'.format(steering_angle_g, throttle_g, speed))
-            send_control(steering_angle_g, throttle_g)
+            print('{} {} {} {}'.format(steering_angle_g, throttle_g, throttle_op(throttle_g)/1.5, speed))
+            send_control(steering_angle_g, throttle_op(throttle_g))
         except Exception as e:
             print(e)
 

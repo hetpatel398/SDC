@@ -29,7 +29,7 @@ future times to improve driving abilities of car in future.
 
 `python model.py` <----To Train
 
-`python drive.py model.h` <-----To run using saved model model.h
+`python drive.py model.h5` <-----To run using saved model model.h5
 
 **Project by:**
 * Het Patel

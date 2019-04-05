@@ -17,6 +17,20 @@ source of transportation so we have decided to contribute towards the ‘Self
 Driving Car’ which is great research area that has shown great promise in
 future times to improve driving abilities of car in future.
 
+**Python Libraries Required**
+* Tensorflow
+* Keras
+* Pillow
+
+**Hardware Required**
+* Preferable to have a GPU but we didn't have a GPU so we mainly trained it on Google Colab and Intel DevCloud
+
+**How to Train and Run**
+
+`python model.py` <----To Train
+
+`python drive.py model.h` <-----To run using saved model model.h
+
 **Project by:**
 * Het Patel
 * Raj Bhatti
